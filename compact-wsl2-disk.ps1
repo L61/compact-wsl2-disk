@@ -8,9 +8,11 @@ get-childitem -recurse -filter "ext4.vhdx" -ErrorAction SilentlyContinue | forea
 }
 
 # Docker wsl2 vhdx files
-cd $env:LOCALAPPDATA\Docker
-get-childitem -recurse -filter "ext4.vhdx" -ErrorAction SilentlyContinue | foreach-object {
-  $files += ${PSItem}
+if (Test-Path $path) {
+	cd $env:LOCALAPPDATA\Docker
+	get-childitem -recurse -filter "ext4.vhdx" -ErrorAction SilentlyContinue | foreach-object {
+		$files += ${PSItem}
+	}
 }
 
 if ( $files.count -eq 0 ) {
